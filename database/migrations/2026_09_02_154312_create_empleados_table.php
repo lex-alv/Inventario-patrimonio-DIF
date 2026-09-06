@@ -1,0 +1,36 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('empleados', function (Blueprint $table) {
+            $table->id();
+            $table->string('numero_empleado', 30)->unique();
+            $table->string('nombre', 100);
+            $table->string('primer_apellido', 100);
+            $table->string('segundo_apellido', 100)->nullable();
+            $table->string('cargo', 150);
+            $table->foreignId('unidad_administrativa_id')
+                ->constrained('unidades_administrativas')
+                ->onUpdate('cascade');
+            $table->string('correo_institucional', 150)->nullable()->unique();
+            $table->enum('estatus', ['Activo', 'Inactivo'])->default('Activo');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('empleados');
+    }
+};
