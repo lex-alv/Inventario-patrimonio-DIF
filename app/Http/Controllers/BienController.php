@@ -81,4 +81,20 @@ class BienController extends Controller
 
         return view('bienes.show', compact('bien', 'qrCode'));
     }
+    /**
+     * Localiza el activo por su número de inventario escaneado y redirige a su ficha técnica.
+     */
+    public function buscarPorNumero(Request $request)
+    {
+        $numero = $request->input('numero');
+
+        $bien = Bien::where('numero_inventario', $numero)->first();
+
+        if ($bien) {
+            return redirect()->route('bienes.show', $bien->id);
+        }
+
+        return redirect()->route('escaner')
+            ->with('error', "No se encontró ningún activo registrado con el identificador: {$numero}");
+    }
 }
