@@ -9,6 +9,17 @@
             <a href="{{ route('bienes.create') }}" class="btn btn-primary btn-sm">
                 <i class="bi bi-plus-circle me-1"></i>Registrar Nuevo Bien
             </a>
+            <div class="d-flex gap-2">
+                <a href="{{ route('bienes.reporteGeneralPdf') }}" class="btn btn-outline-danger btn-sm">
+                    <i class="bi bi-file-earmark-pdf me-1"></i>Descargar Inventario General (PDF)
+                </a>
+                <a href="{{ route('bienes.create') }}" class="btn btn-primary btn-sm">
+                    <i class="bi bi-plus-circle me-1"></i>Registrar Nuevo Bien
+                </a>
+                <a href="{{ route('bienes.imprimirEtiquetas') }}" target="_blank" class="btn btn-outline-dark btn-sm">
+                    <i class="bi bi-printer me-1"></i>Imprimir Etiquetas QR
+                </a>
+            </div>
         </div>
         <div class="card-body p-0">
             <div class="table-responsive">
@@ -62,8 +73,8 @@
                                         <i class="bi bi-qr-code-scan"></i>
                                     </a>
                                     @if($bien->estatus != 'Baja')
-                                        <a href="{{ route('bajas.create', ['bien_id' => $bien->id]) }}" class="btn btn-outline-danger btn-sm"
-                                            title="Tramitar Baja">
+                                        <a href="{{ route('bajas.create', ['bien_id' => $bien->id]) }}"
+                                            class="btn btn-outline-danger btn-sm" title="Tramitar Baja">
                                             <i class="bi bi-dash-circle"></i>
                                         </a>
                                     @endif

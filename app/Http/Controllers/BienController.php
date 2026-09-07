@@ -7,6 +7,7 @@ use App\Models\CuentaContable;
 use App\Models\UnidadAdministrativa;
 use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class BienController extends Controller
 {
@@ -96,5 +97,49 @@ class BienController extends Controller
 
         return redirect()->route('escaner')
             ->with('error', "No se encontró ningún activo registrado con el identificador: {$numero}");
+    }
+
+    public function reporteGeneralPdf()
+    {
+        // Obtener las cuentas que tienen bienes activos asociados
+        $cuentas = CuentaContable::with([
+            'bienes' => function ($query) {
+                $query->where('estatus', 'Activo')
+                    ->with('unidadAdministrativa')
+                    ->orderBy('numero_inventario');
+            }
+        ])
+            ->orderBy('codigo')
+            ->get()
+            ->filter(function ($cuenta) {
+                return $cuenta->bienes->count() > 0;
+            });
+
+        $totalGeneral = Bien::where('estatus', 'Activo')->sum('costo_adquisicion');
+        $totalActivos = Bien::where('estatus', 'Activo')->count();
+
+        $pdf = Pdf::loadView('bienes.reporte-general-pdf', compact('cuentas', 'totalGeneral', 'totalActivos'))
+            ->setPaper('letter', 'landscape'); // Formato horizontal para tablas contables
+
+        return $pdf->download('Inventario_General_Bienes_Muebles_SMDIF.pdf');
+    }
+
+    /**
+     * Genera la vista de impresión en cuadrícula de etiquetas QR.
+     */
+    public function imprimirEtiquetas(Request $request)
+    {
+        $ids = $request->input('bienes_ids');
+
+        $query = Bien::where('estatus', '!=', 'Baja')
+            ->with('unidadAdministrativa');
+
+        if (!empty($ids)) {
+            $query->whereIn('id', (array) $ids);
+        }
+
+        $bienes = $query->orderBy('numero_inventario')->get();
+
+        return view('bienes.etiquetas-print', compact('bienes'));
     }
 }
