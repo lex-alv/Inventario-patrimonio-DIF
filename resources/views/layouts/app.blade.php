@@ -58,6 +58,31 @@
                             <i class="bi bi-people me-1"></i>Personal / Resguardos
                         </a>
                     </li>
+                    @auth
+                        <li class="nav-item dropdown ms-lg-3">
+                            <a class="nav-link dropdown-toggle text-dark fw-bold" href="#" role="button"
+                                data-bs-toggle="dropdown">
+                                <i class="bi bi-person-circle me-1"></i>{{ Auth::user()->name }}
+                                <span class="badge {{ Auth::user()->rol === 'admin' ? 'bg-danger' : 'bg-secondary' }} ms-1">
+                                    {{ strtoupper(Auth::user()->rol) }}
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end border-0 shadow">
+                                <li><span class="dropdown-item-text small text-muted">{{ Auth::user()->email }}</span></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <form action="{{ route('logout') }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item text-danger">
+                                            <i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    @endauth
                 </ul>
             </div>
         </div>
