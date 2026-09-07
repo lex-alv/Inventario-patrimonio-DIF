@@ -19,6 +19,9 @@
                 <a href="{{ route('bienes.imprimirEtiquetas') }}" target="_blank" class="btn btn-outline-dark btn-sm">
                     <i class="bi bi-printer me-1"></i>Imprimir Etiquetas QR
                 </a>
+                <a href="{{ route('bienes.importar') }}" class="btn btn-outline-success btn-sm">
+                    <i class="bi bi-file-earmark-arrow-up me-1"></i>Importar CSV
+                </a>
             </div>
         </div>
         <div class="card-body p-0">

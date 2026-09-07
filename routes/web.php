@@ -5,6 +5,11 @@ use App\Http\Controllers\BienController;
 use App\Http\Controllers\ResguardoController;
 use App\Http\Controllers\BajaBienController;
 use App\Http\Controllers\EmpleadoController;
+use App\Http\Controllers\ImportacionBienController;
+
+// Importador masivo de censo patrimonial
+Route::get('bienes/importar', [ImportacionBienController::class, 'create'])->name('bienes.importar');
+Route::post('bienes/importar', [ImportacionBienController::class, 'store'])->name('bienes.importar.store');
 
 // Rutas públicas de Login
 Route::get('login', [AuthController::class, 'showLogin'])->name('login');
