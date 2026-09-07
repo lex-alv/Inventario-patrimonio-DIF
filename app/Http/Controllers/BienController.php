@@ -16,13 +16,7 @@ class BienController extends Controller
      */
     public function index()
     {
-        $bienes = Bien::with([
-            'cuentaContable',
-            'unidadAdministrativa',
-            'detallesResguardos' => function ($query) {
-                $query->whereNull('fecha_devolucion')->with('resguardo.empleado');
-            }
-        ])
+        $bienes = Bien::with(['cuentaContable', 'unidadAdministrativa'])
             ->latest()
             ->paginate(15);
 
@@ -101,19 +95,19 @@ class BienController extends Controller
 
     public function reporteGeneralPdf()
     {
-        // Obtener las cuentas que tienen bienes activos asociados
-        $cuentas = CuentaContable::with([
-            'bienes' => function ($query) {
-                $query->where('estatus', 'Activo')
-                    ->with('unidadAdministrativa')
-                    ->orderBy('numero_inventario');
-            }
-        ])
+        // Obtener las cuentas que tienen bienes activos asociados directamente a nivel de base de datos
+        $cuentas = CuentaContable::whereHas('bienes', function ($query) {
+            $query->where('estatus', 'Activo');
+        })
+            ->with([
+                'bienes' => function ($query) {
+                    $query->where('estatus', 'Activo')
+                        ->with('unidadAdministrativa')
+                        ->orderBy('numero_inventario');
+                }
+            ])
             ->orderBy('codigo')
-            ->get()
-            ->filter(function ($cuenta) {
-                return $cuenta->bienes->count() > 0;
-            });
+            ->get();
 
         $totalGeneral = Bien::where('estatus', 'Activo')->sum('costo_adquisicion');
         $totalActivos = Bien::where('estatus', 'Activo')->count();

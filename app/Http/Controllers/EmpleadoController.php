@@ -21,13 +21,16 @@ class EmpleadoController extends Controller
                 }
             ])
             ->when($buscar, function ($query, $buscar) {
-                $query->where('nombre', 'like', "%{$buscar}%")
-                    ->orWhere('primer_apellido', 'like', "%{$buscar}%")
-                    ->orWhere('segundo_apellido', 'like', "%{$buscar}%")
-                    ->orWhere('numero_empleado', 'like', "%{$buscar}%");
+                $query->where(function ($subquery) use ($buscar) {
+                    $subquery->where('nombre', 'like', "%{$buscar}%")
+                        ->orWhere('primer_apellido', 'like', "%{$buscar}%")
+                        ->orWhere('segundo_apellido', 'like', "%{$buscar}%")
+                        ->orWhere('numero_empleado', 'like', "%{$buscar}%");
+                });
             })
             ->orderBy('primer_apellido')
-            ->paginate(12);
+            ->paginate(12)
+            ->withQueryString();
 
         return view('empleados.index', compact('empleados', 'buscar'));
     }
@@ -44,20 +47,17 @@ class EmpleadoController extends Controller
             }
         ]);
 
-        // Separar bienes actualmente en custodia (fecha_devolucion IS NULL)
-        $bienesActivos = collect();
-        foreach ($empleado->resguardos as $resguardo) {
-            foreach ($resguardo->detalles as $detalle) {
-                if (is_null($detalle->fecha_devolucion) && $detalle->bien->estatus === 'Activo') {
-                    $bienesActivos->push([
-                        'resguardo_folio' => $resguardo->folio_resguardo,
-                        'resguardo_fecha' => $resguardo->fecha_emision,
-                        'bien' => $detalle->bien,
-                        'detalle_id' => $detalle->id,
-                    ]);
-                }
-            }
-        }
+        // Separar bienes actualmente en custodia (fecha_devolucion IS NULL y estatus Activo)
+        $bienesActivos = $empleado->resguardos->flatMap(function ($resguardo) {
+            return $resguardo->detalles
+                ->filter(fn ($detalle) => is_null($detalle->fecha_devolucion) && $detalle->bien?->estatus === 'Activo')
+                ->map(fn ($detalle) => [
+                    'resguardo_folio' => $resguardo->folio_resguardo,
+                    'resguardo_fecha' => $resguardo->fecha_emision,
+                    'bien' => $detalle->bien,
+                    'detalle_id' => $detalle->id,
+                ]);
+        })->values();
 
         return view('empleados.show', compact('empleado', 'bienesActivos'));
     }

@@ -31,6 +31,10 @@ class ImportacionBienController extends Controller
         $errores = [];
         $filaNumero = 1;
 
+        // Caché en memoria para evitar consultas redundantes por cada fila
+        $cuentasCache = [];
+        $areasCache = [];
+
         DB::beginTransaction();
 
         try {
@@ -63,9 +67,16 @@ class ImportacionBienController extends Controller
                     continue;
                 }
 
-                // Buscar o asociar cuenta y área
-                $cuenta = CuentaContable::where('codigo', $codigoCuenta)->first();
-                $area = UnidadAdministrativa::where('nombre', 'like', "%{$nombreArea}%")->first();
+                // Buscar o asociar cuenta y área utilizando memoización
+                if (!array_key_exists($codigoCuenta, $cuentasCache)) {
+                    $cuentasCache[$codigoCuenta] = CuentaContable::where('codigo', $codigoCuenta)->first();
+                }
+                $cuenta = $cuentasCache[$codigoCuenta];
+
+                if (!array_key_exists($nombreArea, $areasCache)) {
+                    $areasCache[$nombreArea] = UnidadAdministrativa::where('nombre', 'like', "%{$nombreArea}%")->first();
+                }
+                $area = $areasCache[$nombreArea];
 
                 if (!$cuenta || !$area) {
                     $errores[] = "Fila {$filaNumero}: Cuenta contable '{$codigoCuenta}' o área '{$nombreArea}' no válida.";
@@ -105,7 +116,9 @@ class ImportacionBienController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
-            fclose($handle);
+            if (is_resource($handle)) {
+                fclose($handle);
+            }
             return back()->with('error', 'Error en el archivo CSV: ' . $e->getMessage());
         }
     }

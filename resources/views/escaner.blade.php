@@ -3,27 +3,27 @@
 @section('content')
     <div class="row justify-content-center">
         <div class="col-lg-6 col-md-8">
-            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
-                <div class="card-header bg-white py-3 text-center border-bottom">
-                    <h5 class="mb-1 fw-bold text-dark">
-                        <i class="bi bi-qr-code-scan me-2 text-primary"></i>Lector de Inventario Patrimonial
+            <div class="card shadow-sm">
+                <div class="card-header bg-white py-3 text-center">
+                    <h5 class="mb-1 fw-bold text-dark d-flex align-items-center justify-content-center">
+                        <i class="bi bi-qr-code-scan me-2" style="color: var(--gov-primary);"></i>Lector de Inventario Patrimonial
                     </h5>
-                    <small class="text-muted">Escanea la etiqueta QR adherida al activo mueble</small>
+                    <div class="small text-muted">Escanea la etiqueta oficial QR adherida al activo mueble</div>
                 </div>
 
                 <div class="card-body p-4 text-center">
 
                     <!-- Selector de Cámara (Visible si hay múltiples cámaras disponibles) -->
                     <div id="camera-select-group" class="mb-3 d-none text-start">
-                        <label for="cameraSelect" class="form-label small fw-bold text-muted">
-                            <i class="bi bi-camera-video me-1"></i>Seleccionar Cámara:
+                        <label for="cameraSelect" class="form-label">
+                            <i class="bi bi-camera-video me-1"></i>Seleccionar Cámara de Entrada:
                         </label>
                         <select id="cameraSelect" class="form-select form-select-sm"></select>
                     </div>
 
                     <!-- Contenedor del visor de la cámara -->
-                    <div class="scanner-container position-relative mx-auto rounded-3 overflow-hidden bg-dark shadow-sm"
-                        style="max-width: 420px; min-height: 320px; aspect-ratio: 4/3;">
+                    <div class="scanner-container position-relative mx-auto rounded overflow-hidden bg-dark shadow-sm"
+                        style="max-width: 420px; min-height: 300px; aspect-ratio: 4/3; border: 2px solid var(--gov-border-strong);">
 
                         <!-- Elemento donde Html5Qrcode renderiza el video de la cámara -->
                         <div id="reader" style="width: 100%; height: 100%;"></div>
@@ -36,28 +36,28 @@
 
                         <!-- Indicador de carga inicial -->
                         <div id="camera-loading" class="position-absolute top-50 start-50 translate-middle text-white text-center w-100 px-3">
-                            <div class="spinner-border text-primary mb-2" role="status">
+                            <div class="spinner-border text-light mb-2" role="status">
                                 <span class="visually-hidden">Cargando...</span>
                             </div>
-                            <p class="small mb-0 text-white-50">Iniciando cámara...</p>
+                            <p class="small mb-0 text-white-50">Iniciando sensor óptico...</p>
                         </div>
                     </div>
 
                     <!-- Estado de detección -->
                     <div id="scan-status" class="alert alert-info py-2 small mt-3 mb-0 text-start">
-                        <i class="bi bi-info-circle me-1"></i> Conceda los permisos de cámara en el navegador para comenzar a escanear.
+                        <i class="bi bi-info-circle me-1"></i> Conceda permisos de cámara en el navegador para comenzar el escaneo del código QR.
                     </div>
 
                     <!-- Búsqueda manual alternativa -->
                     <div class="mt-4 pt-3 border-top text-start">
-                        <label for="manualInput" class="form-label small fw-bold text-muted">
-                            <i class="bi bi-keyboard me-1"></i>¿No puedes escanear? Ingresa el número de inventario:
+                        <label for="manualInput" class="form-label">
+                            <i class="bi bi-keyboard me-1"></i>Ingreso Manual de Número de Inventario:
                         </label>
                         <div class="input-group">
-                            <input type="text" id="manualInput" class="form-control text-uppercase"
-                                placeholder="Ej. SMDIF-SAI-2026-0001">
+                            <input type="text" id="manualInput" class="form-control font-mono-num text-uppercase"
+                                placeholder="Ej. SMDIF-2026-0001">
                             <button class="btn btn-primary px-3" type="button" id="manualBtn">
-                                <i class="bi bi-search me-1"></i>Buscar
+                                <i class="bi bi-search me-1"></i>Buscar Ficha
                             </button>
                         </div>
                     </div>
@@ -73,6 +73,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            background-color: #0F172A !important;
         }
         #reader {
             width: 100% !important;
@@ -105,8 +106,8 @@
             left: 10%;
             right: 10%;
             height: 2px;
-            background: linear-gradient(90deg, transparent, #0d6efd, #00f2fe, #0d6efd, transparent);
-            box-shadow: 0 0 8px rgba(13, 110, 253, 0.8);
+            background: linear-gradient(90deg, transparent, var(--gov-accent-teal), #67e8f9, var(--gov-accent-teal), transparent);
+            box-shadow: 0 0 8px rgba(13, 148, 136, 0.8);
             animation: laserScan 2.5s infinite ease-in-out;
         }
         @keyframes laserScan {
@@ -117,8 +118,8 @@
         .scanner-corners {
             width: 70%;
             height: 70%;
-            border: 2px solid rgba(255, 255, 255, 0.4);
-            border-radius: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 6px;
             position: relative;
         }
     </style>
@@ -149,7 +150,7 @@
                 isScanning = false;
 
                 statusDiv.className = "alert alert-success py-2 small mt-3 mb-0 text-start";
-                statusDiv.innerHTML = `<i class="bi bi-check-circle-fill me-1"></i> ¡Código detectado: <strong>${decodedText}</strong>! Redirigiendo...`;
+                statusDiv.innerHTML = `<i class="bi bi-check-circle-fill me-1"></i> ¡Código detectado: <strong class="font-mono-num">${decodedText}</strong>! Redirigiendo a ficha...`;
 
                 // Detener la cámara antes de redirigir
                 if (html5QrCode) {
@@ -190,13 +191,13 @@
                     loadingDiv.classList.add('d-none');
                     overlayDiv.classList.remove('d-none');
                     statusDiv.className = "alert alert-success py-2 small mt-3 mb-0 text-start";
-                    statusDiv.innerHTML = '<i class="bi bi-camera-video me-1"></i> Cámara activa. Apunta hacia el código QR.';
+                    statusDiv.innerHTML = '<i class="bi bi-camera-video me-1"></i> Cámara activa. Apunta hacia el código QR impreso en el bien.';
                 }).catch(err => {
                     loadingDiv.classList.add('d-none');
                     isScanning = false;
                     console.error("Error al iniciar cámara:", err);
                     statusDiv.className = "alert alert-danger py-2 small mt-3 mb-0 text-start";
-                    statusDiv.innerHTML = `<i class="bi bi-exclamation-triangle-fill me-1"></i> No se pudo iniciar la cámara: <strong>${err}</strong>. Asegúrate de permitir el acceso en tu navegador o ingresa el código manualmente.`;
+                    statusDiv.innerHTML = `<i class="bi bi-exclamation-triangle-fill me-1"></i> No se pudo iniciar la cámara: <strong>${err}</strong>. Verifique los permisos del navegador o ingrese el código manualmente.`;
                 });
             }
 
@@ -218,7 +219,6 @@
             // Detectar cámaras disponibles
             Html5Qrcode.getCameras().then(devices => {
                 if (devices && devices.length > 0) {
-                    // Si hay múltiples cámaras, mostrar selector
                     if (devices.length > 1) {
                         cameraSelectGroup.classList.remove('d-none');
                         cameraSelect.innerHTML = '';
@@ -234,7 +234,6 @@
                         });
                     }
 
-                    // Preferir cámara trasera en dispositivos móviles si existe
                     let preferredCamera = devices[0].id;
                     const backCam = devices.find(d => 
                         d.label.toLowerCase().includes('back') || 
@@ -248,15 +247,13 @@
 
                     startCamera(preferredCamera);
                 } else {
-                    // Si no hay lista explícita, intentar con facingMode
                     startCamera({ facingMode: "environment" });
                 }
             }).catch(err => {
-                // Si falla la enumeración previa de cámaras, intentar iniciar directamente con facingMode
                 startCamera({ facingMode: "environment" });
             });
 
-            // Búsqueda manual por botón o tecla Enter
+            // Búsqueda manual
             manualBtn.addEventListener('click', function () {
                 buscarActivo(manualInput.value);
             });
@@ -269,4 +266,4 @@
             });
         });
     </script>
-@endsection
+@endsection

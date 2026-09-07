@@ -31,25 +31,17 @@ class DashboardController extends Controller
         $totalEmpleados = Empleado::where('estatus', 'Activo')->count();
 
         // Distribución del patrimonio por Cuenta Contable Armonizada (CONAC)
-        $cuentasResumen = CuentaContable::withCount([
-            'bienes' => function ($query) {
-                $query->where('estatus', '!=', 'Baja');
-            }
-        ])
-            ->withSum([
-                'bienes' => function ($query) {
-                    $query->where('estatus', '!=', 'Baja');
-                }
-            ], 'costo_adquisicion')
+        $filtroBienesVigentes = function ($query) {
+            $query->where('estatus', '!=', 'Baja');
+        };
+
+        $cuentasResumen = CuentaContable::withCount(['bienes' => $filtroBienesVigentes])
+            ->withSum(['bienes' => $filtroBienesVigentes], 'costo_adquisicion')
             ->having('bienes_count', '>', 0)
             ->get();
 
         // Distribución por Área Operativa del DIF
-        $areasResumen = UnidadAdministrativa::withCount([
-            'bienes' => function ($query) {
-                $query->where('estatus', '!=', 'Baja');
-            }
-        ])->get();
+        $areasResumen = UnidadAdministrativa::withCount(['bienes' => $filtroBienesVigentes])->get();
 
         // Últimos 5 movimientos de resguardo expedidos
         $ultimosResguardos = Resguardo::with(['empleado', 'detalles'])

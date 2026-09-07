@@ -14,34 +14,35 @@
             font-family: Arial, Helvetica, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f8f9fa;
+            background-color: #F8FAFC;
         }
 
         .no-print-bar {
-            background: #212529;
+            background: #0F2D59;
             color: #fff;
             padding: 10px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 2px solid #831843;
         }
 
         .btn-print {
-            background: #0d6efd;
+            background: #0D9488;
             color: #fff;
             border: none;
             padding: 8px 16px;
-            font-size: 14px;
+            font-size: 13px;
             border-radius: 4px;
             cursor: pointer;
             font-weight: bold;
         }
 
         .btn-back {
-            color: #ccc;
+            color: rgba(255, 255, 255, 0.85);
             text-decoration: none;
             margin-right: 15px;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         .grid-container {
@@ -54,7 +55,7 @@
         }
 
         .label-card {
-            border: 1.5px solid #003366;
+            border: 1.5px solid #0F2D59;
             border-radius: 4px;
             padding: 6px;
             background: #fff;
@@ -68,7 +69,7 @@
 
         .label-header {
             text-align: center;
-            border-bottom: 1px solid #003366;
+            border-bottom: 1px solid #0F2D59;
             padding-bottom: 2px;
             margin-bottom: 4px;
         }
@@ -77,13 +78,13 @@
             margin: 0;
             font-size: 7.5pt;
             font-weight: bold;
-            color: #003366;
+            color: #0F2D59;
             text-transform: uppercase;
         }
 
         .label-header span {
             font-size: 6pt;
-            color: #555;
+            color: #64748B;
             display: block;
         }
 
@@ -112,23 +113,24 @@
         .info-box {
             font-size: 6.5pt;
             line-height: 1.2;
-            color: #222;
+            color: #0F172A;
             overflow: hidden;
         }
 
         .info-box .inv-num {
             font-size: 7.5pt;
             font-weight: bold;
-            color: #003366;
+            color: #0F2D59;
             margin-bottom: 2px;
             display: block;
+            font-family: monospace;
         }
 
         .label-footer {
-            border-top: 0.5px dashed #aaa;
+            border-top: 0.5px dashed #CBD5E1;
             padding-top: 2px;
             font-size: 5.5pt;
-            color: #666;
+            color: #64748B;
             text-align: center;
             text-transform: uppercase;
         }
@@ -157,7 +159,7 @@
 <body>
 
     <div class="no-print-bar">
-        <span>Vista previa de impresión: <strong>{{ $bienes->count() }} etiquetas</strong> preparadas.</span>
+        <span>Vista previa de impresión: <strong>{{ $bienes->count() }} etiquetas</strong> oficiales preparadas.</span>
         <div>
             <a href="{{ route('bienes.index') }}" class="btn-back">← Volver al Inventario</a>
             <button onclick="window.print()" class="btn-print">Imprimir Etiquetas</button>

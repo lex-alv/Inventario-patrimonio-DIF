@@ -3,57 +3,58 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Cédula de Resguardo Individual</title>
+    <title>Cédula de Resguardo Individual · SMDIF San Antonio la Isla</title>
     <style>
         body {
             font-family: sans-serif;
-            font-size: 11px;
-            color: #333;
+            font-size: 10px;
+            color: #0F172A;
             margin: 20px;
         }
 
         .header {
             text-align: center;
             margin-bottom: 20px;
-            border-bottom: 2px solid #003366;
+            border-bottom: 2px solid #0F2D59;
             padding-bottom: 10px;
         }
 
         .header h2 {
             margin: 0;
-            color: #003366;
-            font-size: 16px;
+            color: #0F2D59;
+            font-size: 15px;
             text-transform: uppercase;
         }
 
         .header h3 {
             margin: 4px 0;
-            font-size: 13px;
-            color: #555;
+            font-size: 11.5px;
+            color: #475569;
         }
 
         .header p {
             margin: 0;
-            font-size: 10px;
-            color: #777;
+            font-size: 9px;
+            color: #64748B;
         }
 
         .datos-box {
             width: 100%;
             margin-bottom: 15px;
-            border: 1px solid #ccc;
+            border: 1px solid #CBD5E1;
             border-collapse: collapse;
         }
 
         .datos-box td {
             padding: 6px;
-            border: 1px solid #ddd;
+            border: 1px solid #CBD5E1;
         }
 
         .bg-gray {
-            background-color: #f5f5f5;
+            background-color: #F1F5F9;
             font-weight: bold;
             width: 20%;
+            color: #0F2D59;
         }
 
         table.tabla-bienes {
@@ -63,17 +64,18 @@
         }
 
         table.tabla-bienes th {
-            background-color: #003366;
+            background-color: #0F2D59;
             color: white;
             padding: 6px;
-            font-size: 10px;
-            border: 1px solid #003366;
+            font-size: 9px;
+            border: 1px solid #0F2D59;
+            text-transform: uppercase;
         }
 
         table.tabla-bienes td {
-            border: 1px solid #ddd;
+            border: 1px solid #CBD5E1;
             padding: 6px;
-            font-size: 10px;
+            font-size: 9.5px;
         }
 
         .firmas {
@@ -88,7 +90,7 @@
         }
 
         .linea {
-            border-top: 1px solid #000;
+            border-top: 1px solid #0F172A;
             margin-top: 40px;
             padding-top: 5px;
             font-weight: bold;
@@ -96,9 +98,11 @@
 
         .declaratoria {
             margin-top: 20px;
-            font-size: 9px;
+            font-size: 8.5px;
             text-align: justify;
-            color: #555;
+            color: #64748B;
+            border-left: 2px solid #831843;
+            padding-left: 8px;
         }
     </style>
 </head>
@@ -107,22 +111,22 @@
 
     <div class="header">
         <h2>Sistema Municipal DIF San Antonio la Isla</h2>
-        <h3>Coordinación Administrativa - Control Patrimonial</h3>
+        <h3>Coordinación Administrativa · Control Patrimonial</h3>
         <p>CÉDULA INDIVIDUAL DE RESGUARDO DE BIENES MUEBLES</p>
     </div>
 
     <table class="datos-box">
         <tr>
             <td class="bg-gray">Folio Resguardo:</td>
-            <td><strong>{{ $resguardo->folio_resguardo }}</strong></td>
+            <td><strong style="font-family: monospace;">{{ $resguardo->folio_resguardo }}</strong></td>
             <td class="bg-gray">Fecha Emisión:</td>
             <td>{{ \Carbon\Carbon::parse($resguardo->fecha_emision)->format('d/m/Y') }}</td>
         </tr>
         <tr>
             <td class="bg-gray">Responsable:</td>
-            <td>{{ $resguardo->empleado->nombre_completo }}</td>
+            <td><strong>{{ $resguardo->empleado->nombre_completo }}</strong></td>
             <td class="bg-gray">No. Empleado:</td>
-            <td>{{ $resguardo->empleado->numero_empleado }}</td>
+            <td style="font-family: monospace;">{{ $resguardo->empleado->numero_empleado }}</td>
         </tr>
         <tr>
             <td class="bg-gray">Cargo:</td>
@@ -146,12 +150,12 @@
         <tbody>
             @foreach($resguardo->detalles as $detalle)
                 <tr>
-                    <td align="center"><strong>{{ $detalle->bien->numero_inventario }}</strong></td>
+                    <td align="center" style="font-family: monospace;"><strong>{{ $detalle->bien->numero_inventario }}</strong></td>
                     <td>{{ $detalle->bien->descripcion }}</td>
                     <td>{{ $detalle->bien->marca ?? 'S/M' }} / {{ $detalle->bien->modelo ?? 'S/M' }}</td>
-                    <td>{{ $detalle->bien->numero_serie ?? 'S/N' }}</td>
+                    <td style="font-family: monospace;">{{ $detalle->bien->numero_serie ?? 'S/N' }}</td>
                     <td align="center">{{ $detalle->bien->estado_conservacion }}</td>
-                    <td align="right">${{ number_format($detalle->bien->costo_adquisicion, 2) }}</td>
+                    <td align="right" style="font-family: monospace;">${{ number_format($detalle->bien->costo_adquisicion, 2) }}</td>
                 </tr>
             @endforeach
         </tbody>

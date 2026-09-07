@@ -1,0 +1,662 @@
+/**
+ * ============================================================================
+ * SISTEMA DE DISEÑO INSTITUCIONAL - SMDIF SAN ANTONIO LA ISLA
+ * Módulo: Control y Gestión Patrimonial de Bienes Muebles
+ * Estilo: Formal Gubernamental · Data-Dense · Alta Ergonomía Visual
+ * ============================================================================
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+    /* 1. PALETA DE COLORES INSTITUCIONALES (Tokens CSS) */
+    --gov-primary: #0F2D59;             /* Azul Marino / Petróleo Profundo */
+    --gov-primary-hover: #091E3D;
+    --gov-primary-light: #1E3A8A;
+    --gov-primary-subtle: #EBF2FA;
+    
+    --gov-secondary: #831843;           /* Vino Institucional DIF */
+    --gov-secondary-hover: #6D1236;
+    --gov-secondary-subtle: #FDF2F8;
+    
+    --gov-accent-teal: #0D9488;         /* Teal Sobrio Institucional */
+    --gov-accent-teal-subtle: #CCFBF1;
+    
+    --gov-bg-app: #F8FAFC;              /* Gris Niebla Frío (anti-fatiga visual) */
+    --gov-bg-surface: #FFFFFF;          /* Blanco Puro */
+    --gov-bg-muted: #F1F5F9;            /* Fondo para encabezados de tablas/secciones */
+    
+    --gov-border: #E2E8F0;              /* Borde Suave Contenedores */
+    --gov-border-strong: #CBD5E1;       /* Borde Form/Controles */
+    --gov-border-focus: rgba(15, 45, 89, 0.25);
+    
+    /* Tipografía y Contrastes */
+    --gov-text-primary: #0F172A;        /* Gris Carbón Oscuro */
+    --gov-text-secondary: #475569;      /* Gris Neutro / Subtítulos */
+    --gov-text-muted: #64748B;          /* Gris Metadatos */
+    --gov-text-light: #94A3B8;
+    
+    /* Colores Semánticos / Estados de Bienes */
+    --gov-status-success-bg: #DCFCE7;
+    --gov-status-success-text: #15803D;
+    --gov-status-success-border: #BBF7D0;
+    
+    --gov-status-warning-bg: #FEF3C7;
+    --gov-status-warning-text: #B45309;
+    --gov-status-warning-border: #FDE68A;
+    
+    --gov-status-danger-bg: #FEE2E2;
+    --gov-status-danger-text: #B91C1C;
+    --gov-status-danger-border: #FECACA;
+    
+    --gov-status-info-bg: #E0F2FE;
+    --gov-status-info-text: #0369A1;
+    --gov-status-info-border: #BAE6FD;
+    
+    --gov-status-neutral-bg: #F1F5F9;
+    --gov-status-neutral-text: #475569;
+    --gov-status-neutral-border: #E2E8F0;
+
+    /* Bordes y Sombras Contenidas */
+    --gov-radius-sm: 4px;
+    --gov-radius: 6px;
+    --gov-radius-md: 6px;
+    --gov-radius-lg: 8px;
+    
+    --gov-shadow-xs: 0 1px 2px 0 rgba(15, 23, 42, 0.04);
+    --gov-shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.06), 0 1px 2px -1px rgba(15, 23, 42, 0.04);
+    --gov-shadow-card: 0 1px 3px 0 rgba(15, 23, 42, 0.05), 0 1px 2px -1px rgba(15, 23, 42, 0.03);
+    --gov-shadow-dropdown: 0 4px 12px rgba(15, 23, 42, 0.12);
+}
+
+/* ==========================================================================
+   2. REGLAS GLOBALES Y TIPOGRAFÍA
+   ========================================================================== */
+html, body {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: var(--gov-bg-app);
+    color: var(--gov-text-primary);
+    font-size: 0.875rem; /* 14px base para densidad de datos */
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Soporte numérico tabular y monoespaciado para importes, folios y cuentas */
+.font-mono-num,
+.tabular-nums,
+.num-inv,
+.cuenta-conac {
+    font-family: 'JetBrains Mono', 'SF Mono', Consolas, Monaco, monospace;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    color: var(--gov-text-primary);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+/* ==========================================================================
+   3. BARRA DE NAVEGACIÓN INSTITUCIONAL (Navbar)
+   ========================================================================== */
+.gov-navbar,
+.navbar.navbar-dark.bg-primary {
+    background-color: var(--gov-primary) !important;
+    border-bottom: 2px solid var(--gov-secondary) !important;
+    box-shadow: 0 2px 8px rgba(15, 45, 89, 0.15) !important;
+    padding-top: 0.55rem;
+    padding-bottom: 0.55rem;
+}
+
+.gov-navbar .navbar-brand,
+.navbar.bg-primary .navbar-brand {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: #FFFFFF !important;
+    display: inline-flex;
+    align-items: center;
+}
+
+.gov-navbar .navbar-brand .brand-badge,
+.navbar.bg-primary .navbar-brand .brand-badge {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    background: rgba(255, 255, 255, 0.15);
+    color: #FFFFFF;
+    padding: 0.15rem 0.45rem;
+    border-radius: var(--gov-radius-sm);
+    margin-left: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.gov-navbar .nav-link,
+.navbar.bg-primary .nav-link {
+    color: rgba(255, 255, 255, 0.82) !important;
+    font-weight: 500;
+    font-size: 0.8125rem;
+    padding: 0.45rem 0.75rem !important;
+    border-radius: var(--gov-radius-sm);
+    transition: all 0.15s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+}
+
+.gov-navbar .nav-link:hover,
+.navbar.bg-primary .nav-link:hover {
+    color: #FFFFFF !important;
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.gov-navbar .nav-link.active,
+.navbar.bg-primary .nav-link.active {
+    color: #FFFFFF !important;
+    background-color: rgba(255, 255, 255, 0.14) !important;
+    font-weight: 600;
+    box-shadow: inset 0 -2px 0 0 var(--gov-accent-teal);
+}
+
+.gov-navbar .user-dropdown-btn,
+.navbar.bg-primary .dropdown-toggle {
+    color: #FFFFFF !important;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--gov-radius-sm);
+    padding: 0.35rem 0.65rem !important;
+}
+
+.gov-navbar .user-dropdown-btn:hover,
+.navbar.bg-primary .dropdown-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.16);
+}
+
+.dropdown-menu {
+    border: 1px solid var(--gov-border) !important;
+    border-radius: var(--gov-radius) !important;
+    box-shadow: var(--gov-shadow-dropdown) !important;
+    padding: 0.35rem 0;
+    font-size: 0.8125rem;
+}
+
+.dropdown-item {
+    padding: 0.45rem 1rem;
+    color: var(--gov-text-primary);
+    font-size: 0.8125rem;
+}
+
+.dropdown-item:hover {
+    background-color: var(--gov-bg-muted);
+    color: var(--gov-primary);
+}
+
+/* ==========================================================================
+   4. TARJETAS Y CONTENEDORES (Cards & Surfaces)
+   ========================================================================== */
+.card,
+.gov-card {
+    background-color: var(--gov-bg-surface);
+    border: 1px solid var(--gov-border) !important;
+    border-radius: var(--gov-radius-lg) !important;
+    box-shadow: var(--gov-shadow-card) !important;
+    overflow: hidden;
+}
+
+.card-header,
+.gov-card-header {
+    background-color: var(--gov-bg-surface) !important;
+    border-bottom: 1px solid var(--gov-border) !important;
+    padding: 0.75rem 1.25rem;
+}
+
+.card-header h5,
+.card-header h6 {
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    color: var(--gov-text-primary) !important;
+    display: flex;
+    align-items: center;
+}
+
+.card-footer,
+.gov-card-footer {
+    background-color: var(--gov-bg-surface) !important;
+    border-top: 1px solid var(--gov-border) !important;
+    padding: 0.65rem 1.25rem;
+}
+
+/* ==========================================================================
+   5. TABLAS DATA-DENSE COMPACTAS (Ergonomía Administrativa)
+   ========================================================================== */
+.table-responsive {
+    border-radius: 0;
+    overflow-x: auto;
+}
+
+.table {
+    margin-bottom: 0;
+    font-size: 0.8125rem;
+    color: var(--gov-text-primary);
+    border-color: var(--gov-border);
+}
+
+.table > :not(caption) > * > * {
+    padding: 0.45rem 0.75rem;
+    border-bottom-color: var(--gov-border);
+}
+
+.table thead,
+.table thead.table-light,
+.thead-gov {
+    background-color: var(--gov-bg-muted) !important;
+    border-bottom: 1px solid var(--gov-border-strong) !important;
+}
+
+.table thead th {
+    background-color: var(--gov-bg-muted) !important;
+    color: var(--gov-text-secondary) !important;
+    font-size: 0.725rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding-top: 0.55rem;
+    padding-bottom: 0.55rem;
+    border-bottom: 1px solid var(--gov-border-strong) !important;
+    white-space: nowrap;
+}
+
+.table tbody tr {
+    transition: background-color 0.1s ease-in-out;
+}
+
+.table tbody tr:nth-of-type(even) {
+    background-color: rgba(248, 250, 252, 0.7);
+}
+
+.table-hover > tbody > tr:hover,
+.table tbody tr:hover {
+    background-color: rgba(15, 45, 89, 0.035) !important;
+}
+
+/* Tablas con bordes en celdas para resúmenes contables */
+.table-bordered {
+    border: 1px solid var(--gov-border);
+}
+
+.table-bordered th,
+.table-bordered td {
+    border: 1px solid var(--gov-border);
+}
+
+/* ==========================================================================
+   6. BADGES E INDICADORES SEMÁNTICOS (Flat & Discretos)
+   ========================================================================== */
+.badge {
+    font-size: 0.725rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.01em;
+    padding: 0.22rem 0.55rem !important;
+    border-radius: var(--gov-radius-sm) !important;
+    line-height: 1.25;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    box-shadow: none !important;
+    text-transform: none;
+}
+
+/* Éxito: Activo, Bueno, Regularizado, Vigente */
+.badge.bg-success,
+.badge-gov-success {
+    background-color: var(--gov-status-success-bg) !important;
+    color: var(--gov-status-success-text) !important;
+    border: 1px solid var(--gov-status-success-border) !important;
+}
+
+/* Advertencia: Regular, Pendiente, En Trámite */
+.badge.bg-warning,
+.badge-gov-warning {
+    background-color: var(--gov-status-warning-bg) !important;
+    color: var(--gov-status-warning-text) !important;
+    border: 1px solid var(--gov-status-warning-border) !important;
+}
+
+/* Peligro: Malo, Baja Patrimonial, Auditoría */
+.badge.bg-danger,
+.badge-gov-danger {
+    background-color: var(--gov-status-danger-bg) !important;
+    color: var(--gov-status-danger-text) !important;
+    border: 1px solid var(--gov-status-danger-border) !important;
+}
+
+/* Informativo / Cédula / Custodia */
+.badge.bg-info,
+.badge-gov-info {
+    background-color: var(--gov-status-info-bg) !important;
+    color: var(--gov-status-info-text) !important;
+    border: 1px solid var(--gov-status-info-border) !important;
+}
+
+/* Neutro / Cuentas CONAC / Código secundario */
+.badge.bg-secondary,
+.badge-gov-secondary {
+    background-color: var(--gov-status-neutral-bg) !important;
+    color: var(--gov-status-neutral-text) !important;
+    border: 1px solid var(--gov-status-neutral-border) !important;
+}
+
+.badge.bg-primary,
+.badge-gov-primary {
+    background-color: var(--gov-primary-subtle) !important;
+    color: var(--gov-primary) !important;
+    border: 1px solid rgba(15, 45, 89, 0.2) !important;
+}
+
+/* Badge Vino DIF */
+.badge-gov-wine {
+    background-color: var(--gov-secondary-subtle) !important;
+    color: var(--gov-secondary) !important;
+    border: 1px solid rgba(131, 24, 67, 0.2) !important;
+}
+
+/* ==========================================================================
+   7. BOTONES Y CONTROLES DE ACCIÓN (Buttons)
+   ========================================================================== */
+.btn {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    border-radius: var(--gov-radius) !important;
+    padding: 0.375rem 0.85rem;
+    transition: all 0.15s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    letter-spacing: -0.01em;
+}
+
+.btn-sm {
+    font-size: 0.75rem !important;
+    padding: 0.25rem 0.55rem !important;
+    border-radius: var(--gov-radius-sm) !important;
+}
+
+.btn-primary,
+.btn-gov-primary {
+    background-color: var(--gov-primary) !important;
+    border-color: var(--gov-primary) !important;
+    color: #FFFFFF !important;
+}
+
+.btn-primary:hover,
+.btn-gov-primary:hover {
+    background-color: var(--gov-primary-hover) !important;
+    border-color: var(--gov-primary-hover) !important;
+    color: #FFFFFF !important;
+}
+
+.btn-secondary,
+.btn-gov-wine {
+    background-color: var(--gov-secondary) !important;
+    border-color: var(--gov-secondary) !important;
+    color: #FFFFFF !important;
+}
+
+.btn-secondary:hover,
+.btn-gov-wine:hover {
+    background-color: var(--gov-secondary-hover) !important;
+    border-color: var(--gov-secondary-hover) !important;
+}
+
+.btn-outline-primary {
+    color: var(--gov-primary) !important;
+    border-color: var(--gov-primary-light) !important;
+    background-color: transparent !important;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--gov-primary) !important;
+    border-color: var(--gov-primary) !important;
+    color: #FFFFFF !important;
+}
+
+.btn-outline-secondary {
+    color: var(--gov-text-secondary) !important;
+    border-color: var(--gov-border-strong) !important;
+    background-color: #FFFFFF !important;
+}
+
+.btn-outline-secondary:hover {
+    background-color: var(--gov-bg-muted) !important;
+    border-color: var(--gov-text-secondary) !important;
+    color: var(--gov-text-primary) !important;
+}
+
+.btn-success {
+    background-color: #16A34A !important;
+    border-color: #16A34A !important;
+    color: #FFFFFF !important;
+}
+
+.btn-success:hover {
+    background-color: #15803D !important;
+    border-color: #15803D !important;
+}
+
+.btn-outline-success {
+    color: #16A34A !important;
+    border-color: #16A34A !important;
+    background-color: #FFFFFF !important;
+}
+
+.btn-outline-success:hover {
+    background-color: #16A34A !important;
+    color: #FFFFFF !important;
+}
+
+.btn-danger {
+    background-color: #DC2626 !important;
+    border-color: #DC2626 !important;
+    color: #FFFFFF !important;
+}
+
+.btn-danger:hover {
+    background-color: #B91C1C !important;
+    border-color: #B91C1C !important;
+}
+
+.btn-outline-danger {
+    color: #DC2626 !important;
+    border-color: #DC2626 !important;
+    background-color: #FFFFFF !important;
+}
+
+.btn-outline-danger:hover {
+    background-color: #DC2626 !important;
+    color: #FFFFFF !important;
+}
+
+/* ==========================================================================
+   8. FORMULARIOS Y ENTRADAS DE DATOS (Forms)
+   ========================================================================== */
+.form-label {
+    font-size: 0.775rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 0.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.form-control,
+.form-select {
+    border: 1px solid var(--gov-border-strong);
+    border-radius: var(--gov-radius) !important;
+    font-size: 0.8125rem;
+    color: var(--gov-text-primary);
+    background-color: #FFFFFF;
+    padding: 0.4rem 0.65rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--gov-primary-light);
+    box-shadow: 0 0 0 3px var(--gov-border-focus);
+    outline: 0;
+}
+
+.form-control-sm,
+.form-select-sm {
+    font-size: 0.775rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--gov-radius-sm) !important;
+}
+
+/* ==========================================================================
+   9. ALERTAS Y NOTIFICACIONES (Alerts)
+   ========================================================================== */
+.alert {
+    border-radius: var(--gov-radius) !important;
+    font-size: 0.8125rem;
+    padding: 0.65rem 1rem;
+    border-width: 1px;
+    border-style: solid;
+    display: flex;
+    align-items: center;
+}
+
+.alert-success {
+    background-color: var(--gov-status-success-bg) !important;
+    color: var(--gov-status-success-text) !important;
+    border-color: var(--gov-status-success-border) !important;
+    border-left: 4px solid var(--gov-status-success-text) !important;
+}
+
+.alert-danger {
+    background-color: var(--gov-status-danger-bg) !important;
+    color: var(--gov-status-danger-text) !important;
+    border-color: var(--gov-status-danger-border) !important;
+    border-left: 4px solid var(--gov-status-danger-text) !important;
+}
+
+.alert-warning {
+    background-color: var(--gov-status-warning-bg) !important;
+    color: var(--gov-status-warning-text) !important;
+    border-color: var(--gov-status-warning-border) !important;
+    border-left: 4px solid var(--gov-status-warning-text) !important;
+}
+
+.alert-info {
+    background-color: var(--gov-status-info-bg) !important;
+    color: var(--gov-status-info-text) !important;
+    border-color: var(--gov-status-info-border) !important;
+    border-left: 4px solid var(--gov-status-info-text) !important;
+}
+
+/* ==========================================================================
+   10. TARJETAS KPI / MÉTRICAS DE DASHBOARD
+   ========================================================================== */
+.kpi-card {
+    background-color: #FFFFFF;
+    border: 1px solid var(--gov-border) !important;
+    border-radius: var(--gov-radius-lg) !important;
+    box-shadow: var(--gov-shadow-card) !important;
+    padding: 1rem 1.15rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+}
+
+.kpi-card.kpi-primary::before { background-color: var(--gov-primary); }
+.kpi-card.kpi-success::before { background-color: var(--gov-status-success-text); }
+.kpi-card.kpi-info::before { background-color: var(--gov-accent-teal); }
+.kpi-card.kpi-danger::before { background-color: var(--gov-status-danger-text); }
+.kpi-card.kpi-wine::before { background-color: var(--gov-secondary); }
+
+.kpi-card .kpi-label {
+    font-size: 0.725rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--gov-text-muted);
+}
+
+.kpi-card .kpi-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-top: 0.15rem;
+    margin-bottom: 0;
+    font-variant-numeric: tabular-nums;
+}
+
+.kpi-card .kpi-icon-wrap {
+    width: 42px;
+    height: 42px;
+    border-radius: var(--gov-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+
+.kpi-card.kpi-primary .kpi-icon-wrap {
+    background-color: var(--gov-primary-subtle);
+    color: var(--gov-primary);
+}
+
+.kpi-card.kpi-success .kpi-icon-wrap {
+    background-color: var(--gov-status-success-bg);
+    color: var(--gov-status-success-text);
+}
+
+.kpi-card.kpi-info .kpi-icon-wrap {
+    background-color: var(--gov-accent-teal-subtle);
+    color: var(--gov-accent-teal);
+}
+
+.kpi-card.kpi-danger .kpi-icon-wrap {
+    background-color: var(--gov-status-danger-bg);
+    color: var(--gov-status-danger-text);
+}
+
+/* ==========================================================================
+   11. PAGINACIÓN Y ELEMENTOS DE NAVEGACIÓN SECUNDARIA
+   ========================================================================== */
+.pagination {
+    margin-bottom: 0;
+    gap: 0.25rem;
+}
+
+.page-item .page-link {
+    font-size: 0.75rem;
+    color: var(--gov-text-secondary);
+    border-color: var(--gov-border);
+    border-radius: var(--gov-radius-sm) !important;
+    padding: 0.3rem 0.6rem;
+}
+
+.page-item.active .page-link {
+    background-color: var(--gov-primary);
+    border-color: var(--gov-primary);
+    color: #FFFFFF;
+}
+
+.page-item:not(.active) .page-link:hover {
+    background-color: var(--gov-bg-muted);
+    color: var(--gov-primary);
+}
